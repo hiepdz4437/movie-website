@@ -1,183 +1,221 @@
-<!DOCTYPE html><html lang="vi">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Netflix Style Movie Showcase</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #141414;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Series</title>
 
-    /* HERO */
-    .hero {
-      height: 70vh;
-      background: linear-gradient(to top, #141414, transparent),
-                  url('images/hero.jpg') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 40px;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #141414;
+  color: white;
+}
 
-    .hero h1 {
-      font-size: 48px;
-      max-width: 600px;
-    }
+/* HERO */
+.hero {
+  height: 70vh;
+  background: linear-gradient(to top, #141414, transparent),
+              url('images/hero.jpg') center/cover;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+}
 
-    .hero p {
-      max-width: 500px;
-      color: #ccc;
-    }
+.hero h1 {
+  font-size: 40px;
+}
 
-    /* ROW */
-    .row {
-      margin: 30px 20px;
-    }
+/* ROW */
+.row {
+  margin: 20px;
+}
 
-    .row h2 {
-      margin-bottom: 10px;
-    }
+.scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+}
 
-    .scroll {
-      display: flex;
-      overflow-x: auto;
-      gap: 12px;
-      padding-bottom: 10px;
-    }
+.card {
+  min-width: 200px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    .scroll::-webkit-scrollbar { display: none; }
+.card:hover {
+  transform: scale(1.1);
+}
 
-    /* CARD */
-    .card {
-      min-width: 200px;
-      height: 300px;
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    .card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+/* POPUP */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
-    .card:hover {
-      transform: scale(1.1);
-      z-index: 2;
-    }
+.popup-content {
+  background: #1e293b;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 10px;
+}
 
-    /* OVERLAY */
-    .overlay {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      padding: 10px;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-      opacity: 0;
-      transition: 0.3s;
-    }
-
-    .card:hover .overlay {
-      opacity: 1;
-    }
-
-    .overlay h3 {
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .overlay p {
-      font-size: 12px;
-      color: #ccc;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-    }
-
-    /* RESPONSIVE */
-    @media(max-width: 768px) {
-      .hero h1 { font-size: 28px; }
-      .card { min-width: 140px; height: 220px; }
-    }
-  </style>
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 22px;
+}
+</style>
 </head>
+
 <body>
 
-<section class="hero">
+<div class="hero">
   <h1>Top Series Nên Xem Một Lần Trong Đời</h1>
-  <p>Khám phá những bộ phim đỉnh cao về tâm lý, quyền lực và bản chất con người.</p>
-</section>
+</div>
 
 <div class="row">
-  <h2>Danh sách nổi bật</h2>
   <div class="scroll">
 
-    <div class="card">
+    <div class="card" onclick="openPopup('breakingbad')">
       <img src="images/bb.jfif">
-      <div class="overlay">
-        <h3>Breaking Bad</h3>
-        <p>Tha hóa bởi quyền lực</p>
-      </div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="openPopup('saul')">
       <img src="images/bcs.jpg">
-      <div class="overlay">
-        <h3>Better Call Saul</h3>
-        <p>Lựa chọn định hình số phận</p>
-      </div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="openPopup('dexter')">
       <img src="images/dexter.png">
-      <div class="overlay">
-        <h3>Dexter</h3>
-        <p>Đạo đức xám</p>
-      </div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="openPopup('prison')">
       <img src="images/ps.png">
-      <div class="overlay">
-        <h3>Prison Break</h3>
-        <p>Trí tuệ vs hệ thống</p>
-      </div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="openPopup('got')">
       <img src="images/got.jfif">
-      <div class="overlay">
-        <h3>Game of Thrones</h3>
-        <p>Quyền lực và hậu quả</p>
-      </div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="openPopup('boys')">
       <img src="images/tb.png">
-      <div class="overlay">
-        <h3>The Boys</h3>
-        <p>Siêu anh hùng đen tối</p>
-      </div>
     </div>
 
   </div>
 </div>
 
-<footer>
-  <p>© 2026 Movie Showcase</p>
-</footer>
+<!-- POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <div id="content"></div>
+  </div>
+</div>
+
+<script>
+const data = {
+breakingbad: `
+<h2>Breaking Bad</h2>
+<p><b>Chủ đề:</b> Tha hóa và quyền lực</p>
+<p><b>Nhân vật:</b> Walter White</p>
+<p><b>Tóm tắt:</b> Một giáo viên hóa học biến thành trùm ma túy, phản ánh quá trình tha hóa.</p>
+<p><b>Điểm nổi bật:</b><br>
+- Phát triển nhân vật xuất sắc<br>
+- Hành động có hậu quả rõ ràng<br>
+- Căng thẳng tăng dần</p>
+<p><b>Giá trị:</b> Quyền lực bộc lộ bản chất thật.</p>
+`,
+
+saul: `
+<h2>Better Call Saul</h2>
+<p><b>Chủ đề:</b> Lựa chọn và hệ quả</p>
+<p><b>Nhân vật:</b> Jimmy McGill</p>
+<p><b>Tóm tắt:</b> Hành trình luật sư nhỏ trở thành kẻ thao túng luật pháp.</p>
+<p><b>Điểm nổi bật:</b><br>
+- Nhịp phim chậm<br>
+- Nội tâm sâu sắc<br>
+- Kể chuyện tinh tế</p>
+<p><b>Giá trị:</b> Lựa chọn nhỏ định hình cuộc đời.</p>
+`,
+
+dexter: `
+<h2>Dexter</h2>
+<p><b>Chủ đề:</b> Đạo đức xám</p>
+<p><b>Nhân vật:</b> Dexter Morgan</p>
+<p><b>Tóm tắt:</b> Sát nhân chỉ giết kẻ xấu.</p>
+<p><b>Điểm nổi bật:</b><br>
+- Góc nhìn độc đáo<br>
+- Nội tâm sâu<br>
+- Câu hỏi đạo đức</p>
+<p><b>Giá trị:</b> Thiện và ác không rõ ràng.</p>
+`,
+
+prison: `
+<h2>Prison Break</h2>
+<p><b>Chủ đề:</b> Trí tuệ và chiến lược</p>
+<p><b>Nhân vật:</b> Michael Scofield</p>
+<p><b>Tóm tắt:</b> Kế hoạch vượt ngục thiên tài.</p>
+<p><b>Điểm nổi bật:</b><br>
+- Kịch bản thông minh<br>
+- Nhiều lớp kế hoạch<br>
+- Nhịp nhanh</p>
+<p><b>Giá trị:</b> Trí tuệ là vũ khí mạnh nhất.</p>
+`,
+
+got: `
+<h2>Game of Thrones</h2>
+<p><b>Chủ đề:</b> Quyền lực và chính trị</p>
+<p><b>Nhân vật:</b> Jon Snow, Daenerys</p>
+<p><b>Tóm tắt:</b> Chiến tranh giữa các gia tộc.</p>
+<p><b>Điểm nổi bật:</b><br>
+- Nhân vật phức tạp<br>
+- Plot twist liên tục<br>
+- Quy mô lớn</p>
+<p><b>Giá trị:</b> Quyền lực có cái giá.</p>
+`,
+
+boys: `
+<h2>The Boys</h2>
+<p><b>Chủ đề:</b> Tha hóa quyền lực</p>
+<p><b>Nhân vật:</b> Homelander</p>
+<p><b>Tóm tắt:</b> Siêu anh hùng bị biến chất.</p>
+<p><b>Điểm nổi bật:</b><br>
+- Góc nhìn đen tối<br>
+- Châm biếm xã hội<br>
+- Khai thác mặt tối</p>
+<p><b>Giá trị:</b> Sức mạnh không kiểm soát sẽ bị lạm dụng.</p>
+`
+};
+
+function openPopup(key) {
+  document.getElementById("popup").style.display = "flex";
+  document.getElementById("content").innerHTML = data[key];
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+</script>
 
 </body>
 </html>
