@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Netflix Style Movie Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #141414;
+      color: #fff;
+    }
+
+    /* HERO */
+    .hero {
+      height: 70vh;
+      background: linear-gradient(to top, #141414, transparent),
+                  url('images/hero.jpg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      max-width: 600px;
+    }
+
+    .hero p {
+      max-width: 500px;
+      color: #ccc;
+    }
+
+    /* ROW */
+    .row {
+      margin: 30px 20px;
+    }
+
+    .row h2 {
+      margin-bottom: 10px;
+    }
+
+    .scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding-bottom: 10px;
+    }
+
+    .scroll::-webkit-scrollbar { display: none; }
+
+    /* CARD */
+    .card {
+      min-width: 200px;
+      height: 300px;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card:hover {
+      transform: scale(1.1);
+      z-index: 2;
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .card:hover .overlay {
+      opacity: 1;
+    }
+
+    .overlay h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .overlay p {
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width: 768px) {
+      .hero h1 { font-size: 28px; }
+      .card { min-width: 140px; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Top Series Nên Xem Một Lần Trong Đời</h1>
+  <p>Khám phá những bộ phim đỉnh cao về tâm lý, quyền lực và bản chất con người.</p>
+</section>
+
+<div class="row">
+  <h2>Danh sách nổi bật</h2>
+  <div class="scroll">
+
+    <div class="card">
+      <img src="images/bb.jfif">
+      <div class="overlay">
+        <h3>Breaking Bad</h3>
+        <p>Tha hóa bởi quyền lực</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/bcs.jpg">
+      <div class="overlay">
+        <h3>Better Call Saul</h3>
+        <p>Lựa chọn định hình số phận</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/dexter.png">
+      <div class="overlay">
+        <h3>Dexter</h3>
+        <p>Đạo đức xám</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/ps.png">
+      <div class="overlay">
+        <h3>Prison Break</h3>
+        <p>Trí tuệ vs hệ thống</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/got.jfif">
+      <div class="overlay">
+        <h3>Game of Thrones</h3>
+        <p>Quyền lực và hậu quả</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="images/tb.png">
+      <div class="overlay">
+        <h3>The Boys</h3>
+        <p>Siêu anh hùng đen tối</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Movie Showcase</p>
+</footer>
+
+</body>
+</html>
