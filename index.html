@@ -1,220 +1,87 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Top Series</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #141414;
-  color: white;
-}
-
-/* HERO */
-.hero {
-  height: 70vh;
-  background: linear-gradient(to top, #141414, transparent),
-              url('images/hero.jpg') center/cover;
-  display: flex;
-  align-items: center;
-  padding: 40px;
-}
-
-.hero h1 {
-  font-size: 40px;
-}
-
-/* ROW */
-.row {
-  margin: 20px;
-}
-
-.scroll {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-}
-
-.card {
-  min-width: 200px;
-  height: 300px;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.1);
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* POPUP */
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.9);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.popup-content {
-  background: #1e293b;
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.close {
-  float: right;
-  cursor: pointer;
-  font-size: 22px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Series</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #141414; color: white; }
+        .hero { height: 40vh; background: linear-gradient(to top, #141414, transparent); display: flex; align-items: center; padding: 40px; }
+        .row { margin: 20px; }
+        .scroll { display: flex; overflow-x: auto; gap: 15px; padding: 20px 0; }
+        .card { min-width: 200px; height: 300px; border-radius: 10px; overflow: hidden; cursor: pointer; transition: 0.3s; background: #333; }
+        .card:hover { transform: scale(1.05); z-index: 10; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* POPUP STYLES */
+        .popup { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); 
+            display: none; /* Mặc định ẩn */
+            justify-content: center; align-items: center; z-index: 1000; 
+        }
+        .popup-content { 
+            background: #1e293b; max-width: 500px; width: 90%; 
+            padding: 30px; border-radius: 15px; position: relative; 
+            line-height: 1.6; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .close { position: absolute; top: 10px; right: 20px; cursor: pointer; font-size: 30px; color: #ccc; }
+        .close:hover { color: white; }
+    </style>
 </head>
-
 <body>
 
 <div class="hero">
-  <h1>Top Series Nên Xem Một Lần Trong Đời</h1>
+    <h1>Top Series Nên Xem Một Lần Trong Đời</h1>
 </div>
 
 <div class="row">
-  <div class="scroll">
-
-    <div class="card" onclick="openPopup('breakingbad')">
-      <img src="images/bb.jfif">
+    <div class="scroll">
+        <div class="card" onclick="openPopup('breakingbad')"><img src="images/bb.jfif" alt="Breaking Bad"></div>
+        <div class="card" onclick="openPopup('saul')"><img src="images/bcs.jpg" alt="Better Call Saul"></div>
+        <div class="card" onclick="openPopup('dexter')"><img src="images/dexter.png" alt="Dexter"></div>
+        <div class="card" onclick="openPopup('prison')"><img src="images/ps.png" alt="Prison Break"></div>
+        <div class="card" onclick="openPopup('got')"><img src="images/got.jfif" alt="Game of Thrones"></div>
+        <div class="card" onclick="openPopup('boys')"><img src="images/tb.png" alt="The Boys"></div>
     </div>
-
-    <div class="card" onclick="openPopup('saul')">
-      <img src="images/bcs.jpg">
-    </div>
-
-    <div class="card" onclick="openPopup('dexter')">
-      <img src="images/dexter.png">
-    </div>
-
-    <div class="card" onclick="openPopup('prison')">
-      <img src="images/ps.png">
-    </div>
-
-    <div class="card" onclick="openPopup('got')">
-      <img src="images/got.jfif">
-    </div>
-
-    <div class="card" onclick="openPopup('boys')">
-      <img src="images/tb.png">
-    </div>
-
-  </div>
 </div>
 
-<!-- POPUP -->
-<div id="popup" class="popup">
-  <div class="popup-content">
-    <span class="close" onclick="closePopup()">&times;</span>
-    <div id="content"></div>
-  </div>
+<div id="popup" class="popup" onclick="closePopupOutside(event)">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <div id="content"></div>
+    </div>
 </div>
 
 <script>
-const data = {
-breakingbad: `
-<h2>Breaking Bad</h2>
-<p><b>Chủ đề:</b> Tha hóa và quyền lực</p>
-<p><b>Nhân vật:</b> Walter White</p>
-<p><b>Tóm tắt:</b> Một giáo viên hóa học biến thành trùm ma túy, phản ánh quá trình tha hóa.</p>
-<p><b>Điểm nổi bật:</b><br>
-- Phát triển nhân vật xuất sắc<br>
-- Hành động có hậu quả rõ ràng<br>
-- Căng thẳng tăng dần</p>
-<p><b>Giá trị:</b> Quyền lực bộc lộ bản chất thật.</p>
-`,
+    const data = {
+        breakingbad: `<h2>Breaking Bad</h2><p><b>Chủ đề:</b> Tha hóa và quyền lực</p><p><b>Tóm tắt:</b> Một giáo viên hóa học biến thành trùm ma túy...</p>`,
+        saul: `<h2>Better Call Saul</h2><p><b>Chủ đề:</b> Lựa chọn và hệ quả</p><p><b>Tóm tắt:</b> Hành trình luật sư nhỏ trở thành kẻ thao túng...</p>`,
+        dexter: `<h2>Dexter</h2><p><b>Chủ đề:</b> Đạo đức xám</p><p><b>Tóm tắt:</b> Sát nhân chỉ giết kẻ xấu...</p>`,
+        prison: `<h2>Prison Break</h2><p><b>Chủ đề:</b> Trí tuệ và chiến lược</p><p><b>Tóm tắt:</b> Kế hoạch vượt ngục thiên tài...</p>`,
+        got: `<h2>Game of Thrones</h2><p><b>Chủ đề:</b> Quyền lực và chính trị</p><p><b>Tóm tắt:</b> Chiến tranh giữa các gia tộc...</p>`,
+        boys: `<h2>The Boys</h2><p><b>Chủ đề:</b> Tha hóa quyền lực</p><p><b>Tóm tắt:</b> Siêu anh hùng bị biến chất...</p>`
+    };
 
-saul: `
-<h2>Better Call Saul</h2>
-<p><b>Chủ đề:</b> Lựa chọn và hệ quả</p>
-<p><b>Nhân vật:</b> Jimmy McGill</p>
-<p><b>Tóm tắt:</b> Hành trình luật sư nhỏ trở thành kẻ thao túng luật pháp.</p>
-<p><b>Điểm nổi bật:</b><br>
-- Nhịp phim chậm<br>
-- Nội tâm sâu sắc<br>
-- Kể chuyện tinh tế</p>
-<p><b>Giá trị:</b> Lựa chọn nhỏ định hình cuộc đời.</p>
-`,
+    function openPopup(key) {
+        const popup = document.getElementById("popup");
+        const content = document.getElementById("content");
+        if (data[key]) {
+            content.innerHTML = data[key];
+            popup.style.display = "flex";
+        }
+    }
 
-dexter: `
-<h2>Dexter</h2>
-<p><b>Chủ đề:</b> Đạo đức xám</p>
-<p><b>Nhân vật:</b> Dexter Morgan</p>
-<p><b>Tóm tắt:</b> Sát nhân chỉ giết kẻ xấu.</p>
-<p><b>Điểm nổi bật:</b><br>
-- Góc nhìn độc đáo<br>
-- Nội tâm sâu<br>
-- Câu hỏi đạo đức</p>
-<p><b>Giá trị:</b> Thiện và ác không rõ ràng.</p>
-`,
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
 
-prison: `
-<h2>Prison Break</h2>
-<p><b>Chủ đề:</b> Trí tuệ và chiến lược</p>
-<p><b>Nhân vật:</b> Michael Scofield</p>
-<p><b>Tóm tắt:</b> Kế hoạch vượt ngục thiên tài.</p>
-<p><b>Điểm nổi bật:</b><br>
-- Kịch bản thông minh<br>
-- Nhiều lớp kế hoạch<br>
-- Nhịp nhanh</p>
-<p><b>Giá trị:</b> Trí tuệ là vũ khí mạnh nhất.</p>
-`,
-
-got: `
-<h2>Game of Thrones</h2>
-<p><b>Chủ đề:</b> Quyền lực và chính trị</p>
-<p><b>Nhân vật:</b> Jon Snow, Daenerys</p>
-<p><b>Tóm tắt:</b> Chiến tranh giữa các gia tộc.</p>
-<p><b>Điểm nổi bật:</b><br>
-- Nhân vật phức tạp<br>
-- Plot twist liên tục<br>
-- Quy mô lớn</p>
-<p><b>Giá trị:</b> Quyền lực có cái giá.</p>
-`,
-
-boys: `
-<h2>The Boys</h2>
-<p><b>Chủ đề:</b> Tha hóa quyền lực</p>
-<p><b>Nhân vật:</b> Homelander</p>
-<p><b>Tóm tắt:</b> Siêu anh hùng bị biến chất.</p>
-<p><b>Điểm nổi bật:</b><br>
-- Góc nhìn đen tối<br>
-- Châm biếm xã hội<br>
-- Khai thác mặt tối</p>
-<p><b>Giá trị:</b> Sức mạnh không kiểm soát sẽ bị lạm dụng.</p>
-`
-};
-
-function openPopup(key) {
-  document.getElementById("popup").style.display = "flex";
-  document.getElementById("content").innerHTML = data[key];
-}
-
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
+    // Thêm tính năng: Click ra ngoài hộp thông tin để đóng
+    function closePopupOutside(event) {
+        if (event.target.id === "popup") {
+            closePopup();
+        }
+    }
 </script>
 
 </body>
